@@ -140,6 +140,16 @@ const styles = {
     fontSize: 14,
     fontWeight: "500",
   },
+  successMessage: {
+    padding: "12px 14px",
+    backgroundColor: "#d1fae5",
+    border: "1px solid #a7f3d0",
+    color: "#065f46",
+    borderRadius: "8px",
+    fontSize: 14,
+    fontWeight: "500",
+    marginBottom: 20,
+  },
 };
 
 function isISODate(str) {
@@ -156,6 +166,7 @@ export default function AppForm({ onSuccess } = {}) {
 	const [errors, setErrors] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [serverError, setServerError] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
   const [focusedField, setFocusedField] = useState(null);
 
   function validate() {
@@ -170,6 +181,7 @@ export default function AppForm({ onSuccess } = {}) {
 	async function handleSubmit(ev) {
 		ev.preventDefault();
 		setServerError("");
+		setSuccessMessage("");
 		const e = validate();
 		setErrors(e);
 		if (Object.keys(e).length) return;
@@ -200,6 +212,7 @@ export default function AppForm({ onSuccess } = {}) {
 			}
 
 			setLoading(false);
+			setSuccessMessage("✓ Appointment created successfully!");
 			// Optionally clear form
 			setTitle("");
 			setDate("");
@@ -208,8 +221,9 @@ export default function AppForm({ onSuccess } = {}) {
 			setDescription("");
 			setAttendees("");
 
-			if (typeof onSuccess === "function") onSuccess();
-			else window.location.href = "/"; // fallback navigation
+			if (typeof onSuccess === "function") {
+				setTimeout(() => onSuccess(), 2000);
+			}
 		} catch (err) {
 			setServerError(err.message || "Failed to create appointment.");
 			setLoading(false);
@@ -344,6 +358,12 @@ export default function AppForm({ onSuccess } = {}) {
 							}}
 						/>
 					</div>
+
+					{successMessage && (
+						<div role="alert" style={styles.successMessage}>
+							{successMessage}
+						</div>
+					)}
 
 					{serverError && (
 						<div role="alert" style={styles.serverError}>
