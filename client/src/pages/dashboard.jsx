@@ -164,7 +164,7 @@ export default function Dashboard() {
         <div style={styles.container}>
           {/* Header */}
           <div style={styles.header}>
-            <h1 style={styles.title}>📊 Dashboard Analytics</h1>
+            <h1 style={styles.title}>� Dashboard Analytics</h1>
             <p style={styles.subtitle}>Overview of your appointments and meetings</p>
           </div>
 
