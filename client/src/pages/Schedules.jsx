@@ -316,8 +316,8 @@ export default function Schedules() {
   }
 
   function handleEdit(appointment) {
-    // Navigate to edit page or open modal
-    alert(`Edit functionality - ID: ${appointment._id}\nImplement navigation or modal here`);
+    // Navigate to edit page
+    navigate(`/edit/${appointment._id}`);
   }
 
   function formatDate(dateStr) {

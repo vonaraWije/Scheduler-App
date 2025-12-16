@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import NavigationBar from "../components/NavigationBar";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 
 const styles = {
   pageWrapper: {
@@ -220,6 +221,10 @@ function isISODate(str) {
 }
 
 export default function AppForm({ onSuccess } = {}) {
+	const { id } = useParams();
+	const navigate = useNavigate();
+	const isEditMode = Boolean(id);
+
 	const [title, setTitle] = useState("");
 	const [date, setDate] = useState("");
 	const [time, setTime] = useState("");
@@ -231,6 +236,36 @@ export default function AppForm({ onSuccess } = {}) {
 	const [serverError, setServerError] = useState("");
 	const [successMessage, setSuccessMessage] = useState("");
   const [focusedField, setFocusedField] = useState(null);
+
+  // Fetch appointment data when in edit mode
+  useEffect(() => {
+    if (isEditMode) {
+      fetchAppointment();
+    }
+  }, [id]);
+
+  async function fetchAppointment() {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/appointments/${id}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch appointment");
+      }
+      const data = await res.json();
+      
+      // Pre-populate form fields
+      setTitle(data.title || "");
+      setDate(data.date || "");
+      setTime(data.time || "");
+      setDuration(data.duration || 30);
+      setDescription(data.description || "");
+      setAttendees(Array.isArray(data.attendees) ? data.attendees.join(", ") : "");
+      setLoading(false);
+    } catch (err) {
+      setServerError(err.message || "Failed to load appointment");
+      setLoading(false);
+    }
+  }
 
   function validate() {
     const e = {};
@@ -300,9 +335,9 @@ export default function AppForm({ onSuccess } = {}) {
 			<div style={styles.container}>
 				<div style={styles.header}>
 					<div style={styles.titleWrapper}>
-						<h1 style={styles.title}>Schedule Your Meeting</h1>
+						<h1 style={styles.title}>{isEditMode ? "✏️ Edit Appointment" : "Schedule Your Meeting"}</h1>
 					</div>
-					<p style={styles.subtitle}>Create appointments and invite your team with ease</p>
+					<p style={styles.subtitle}>{isEditMode ? "Update your appointment details" : "Create appointments and invite your team with ease"}</p>
 					<div style={styles.divider}></div>
 				</div>
 
@@ -450,7 +485,10 @@ export default function AppForm({ onSuccess } = {}) {
 							onMouseLeave={(e) => !loading && Object.assign(e.target.style, { transform: "none", boxShadow: "0 8px 20px rgba(102, 126, 234, 0.35)" })}
 							disabled={loading}
 						>
-							{loading ? "🔄 Creating Appointment..." : "✨ Create Appointment"}
+							{loading 
+								? (isEditMode ? "🔄 Updating..." : "🔄 Creating Appointment...")
+								: (isEditMode ? "💾 Update Appointment" : "✨ Create Appointment")
+							}
 						</button>
 					</div>
 				</form>
