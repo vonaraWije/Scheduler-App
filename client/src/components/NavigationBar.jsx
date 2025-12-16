@@ -76,6 +76,17 @@ function Navigation() {
             📋 View Schedules
           </Link>
         </li>
+        <li>
+          <Link
+            to="/dashboard"
+            style={{
+              ...navStyles.navLink,
+              ...(location.pathname === "/dashboard" ? navStyles.activeLink : {}),
+            }}
+          >
+            📊 Dashboard
+          </Link>
+        </li>
       </ul>
     </nav>
   );

@@ -39,6 +39,78 @@ router.get("/", async (req, res) => {
   }
 });
 
+// DASHBOARD STATS - Get statistics for dashboard (MUST BE BEFORE /:id)
+router.get("/stats/dashboard", async (req, res) => {
+  try {
+    const appointments = await Appointment.find();
+    
+    // Total meetings
+    const totalMeetings = appointments.length;
+    
+    // Average duration
+    const avgDuration = appointments.length > 0
+      ? Math.round(appointments.reduce((sum, apt) => sum + apt.duration, 0) / appointments.length)
+      : 0;
+    
+    // Meetings per week (group by week)
+    const weeklyData = {};
+    appointments.forEach(apt => {
+      const date = new Date(apt.date);
+      const week = `Week ${Math.ceil(date.getDate() / 7)}`;
+      weeklyData[week] = (weeklyData[week] || 0) + 1;
+    });
+    
+    // Most busy day
+    const dayCount = {};
+    appointments.forEach(apt => {
+      const date = new Date(apt.date);
+      const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+      dayCount[dayName] = (dayCount[dayName] || 0) + 1;
+    });
+    
+    const busiestDay = Object.keys(dayCount).length > 0
+      ? Object.keys(dayCount).reduce((a, b) => dayCount[a] > dayCount[b] ? a : b)
+      : "No data";
+    
+    // Duration distribution for chart
+    const durationRanges = {
+      "0-30 min": 0,
+      "31-60 min": 0,
+      "61-90 min": 0,
+      "90+ min": 0
+    };
+    
+    appointments.forEach(apt => {
+      if (apt.duration <= 30) durationRanges["0-30 min"]++;
+      else if (apt.duration <= 60) durationRanges["31-60 min"]++;
+      else if (apt.duration <= 90) durationRanges["61-90 min"]++;
+      else durationRanges["90+ min"]++;
+    });
+    
+    res.json({
+      totalMeetings,
+      avgDuration,
+      busiestDay,
+      busiestDayCount: dayCount[busiestDay] || 0,
+      weeklyData: Object.keys(weeklyData).map(week => ({
+        week,
+        meetings: weeklyData[week]
+      })),
+      dayDistribution: Object.keys(dayCount).map(day => ({
+        day,
+        count: dayCount[day]
+      })),
+      durationDistribution: Object.keys(durationRanges).map(range => ({
+        range,
+        count: durationRanges[range]
+      }))
+    });
+  } catch (err) {
+    console.error("Dashboard stats error", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // READ ONE - Get single appointment by ID
 router.get("/:id", async (req, res) => {
   try {

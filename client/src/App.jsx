@@ -4,6 +4,7 @@ import "./App.css";
 import AppForm from "./pages/AppForm";
 import EditForm from "./pages/EditForm";
 import Schedules from "./pages/Schedules";
+import Dashboard from "./pages/dashboard";
 import Navigation from "./components/NavigationBar";
 
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<AppForm />} />
           <Route path="/edit/:id" element={<EditForm />} />
           <Route path="/schedules" element={<Schedules />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>
