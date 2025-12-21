@@ -1,5 +1,7 @@
 const express = require("express");
 const Appointment = require("../models/Appointment");
+const aiParser = require("../services/aiParser");
+const conflictChecker = require("../services/ConflictChecker");
 
 const router = express.Router();
 
@@ -169,6 +171,134 @@ router.delete("/:id", async (req, res) => {
   } catch (err) {
     console.error("Delete appointment error", err);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ==================== AI ENDPOINTS ====================
+
+// AI NATURAL LANGUAGE PARSER - Parse text like "meeting tomorrow at 2pm"
+router.post("/ai/parse-text", async (req, res) => {
+  try {
+    const { text } = req.body;
+
+    if (!text) {
+      return res.status(400).json({ message: "Text input is required" });
+    }
+
+    // Parse natural language using AI service
+    const parsed = aiParser.parseNaturalLanguage(text);
+
+    if (!parsed.success) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Could not understand the input",
+        parsed 
+      });
+    }
+
+    // Check if the parsed appointment has conflicts
+    const existingAppointments = await Appointment.find({ date: parsed.date }).sort({ time: 1 });
+    const conflicts = aiParser.findConflicts(
+      existingAppointments,
+      parsed.time,
+      parsed.duration
+    );
+
+    res.json({
+      success: true,
+      parsed,
+      hasConflicts: conflicts.length > 0,
+      conflicts,
+      message: conflicts.length > 0 
+        ? `⚠️ Found ${conflicts.length} conflict(s) at this time` 
+        : '✅ Time slot is available!'
+    });
+  } catch (err) {
+    console.error("Parse text error", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// AI SMART SCHEDULING - Find available slots between 9 AM - 5 PM
+router.post("/ai/smart-schedule", async (req, res) => {
+  try {
+    const { date, duration = 30, preferredStartTime = "09:00", preferredEndTime = "17:00" } = req.body;
+
+    if (!date) {
+      return res.status(400).json({ message: "Date is required" });
+    }
+
+    const existingAppointments = await Appointment.find({ date }).sort({ time: 1 });
+
+    // Use AI Parser service to find available slots (9 AM - 5 PM)
+    const availableSlots = aiParser.findAvailableSlots(
+      existingAppointments,
+      duration,
+      preferredStartTime,
+      preferredEndTime
+    );
+
+    // Get the best slot using AI scoring
+    const bestSlot = aiParser.getBestSlot(availableSlots);
+
+    res.json({
+      success: true,
+      hasAvailableSlots: availableSlots.length > 0,
+      recommendedSlot: bestSlot,
+      allAvailableSlots: availableSlots,
+      totalSlotsFound: availableSlots.length,
+      message: availableSlots.length > 0
+        ? `Found ${availableSlots.length} available slot(s)`
+        : 'No available slots found for this date'
+    });
+  } catch (err) {
+    console.error("Smart schedule error", err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+// AI CONFLICT CHECKER - Check if a specific time has conflicts
+router.post("/ai/check-conflict", async (req, res) => {
+  try {
+    const { date, time, duration, excludeId } = req.body;
+
+    if (!date || !time || !duration) {
+      return res.status(400).json({ message: "Date, time, and duration are required" });
+    }
+
+    // Get all appointments for that date
+    let existingAppointments = await Appointment.find({ date }).sort({ time: 1 });
+
+    // Check for conflicts
+    const conflictResult = conflictChecker.checkAppointmentConflict(
+      existingAppointments,
+      { time, duration },
+      excludeId
+    );
+
+    // Validate timing (business hours, duration, etc.)
+    const timingValidation = conflictChecker.validateAppointmentTiming({ date, time, duration });
+
+    // Find back-to-back meetings
+    const backToBack = conflictChecker.findBackToBackMeetings(
+      existingAppointments,
+      time,
+      duration
+    );
+
+    res.json({
+      hasConflict: conflictResult.hasConflict,
+      conflicts: conflictResult.conflicts,
+      severity: conflictResult.severity,
+      timingIssues: timingValidation,
+      backToBackMeetings: backToBack,
+      message: conflictResult.hasConflict
+        ? `Conflicts with ${conflictResult.conflicts.length} existing appointment(s)`
+        : 'Time slot is available'
+    });
+  } catch (err) {
+    console.error("Conflict check error", err);
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 

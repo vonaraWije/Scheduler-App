@@ -67,6 +67,17 @@ function Navigation() {
         </li>
         <li>
           <Link
+            to="/ai-agent"
+            style={{
+              ...navStyles.navLink,
+              ...(location.pathname === "/ai-agent" ? navStyles.activeLink : {}),
+            }}
+          >
+            🤖 AI Agent
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/schedules"
             style={{
               ...navStyles.navLink,
@@ -84,7 +95,7 @@ function Navigation() {
               ...(location.pathname === "/dashboard" ? navStyles.activeLink : {}),
             }}
           >
-            📊 Dashboard
+            💎 Dashboard
           </Link>
         </li>
       </ul>
