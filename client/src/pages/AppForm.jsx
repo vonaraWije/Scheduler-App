@@ -6,7 +6,7 @@ const styles = {
   pageWrapper: {
     height: "calc(100vh - 64px)",
     maxHeight: "calc(100vh - 64px)",
-    background: "linear-gradient(135deg, #f8f9ff 0%, #faf5ff 50%, #fdf4ff 100%)",
+    background: "linear-gradient(135deg, #9a77a3ff 0%, #706da1ff 50%, #8568acff 100%)",
     padding: "20px",
     fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     position: "relative",
@@ -15,43 +15,45 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
   },
-  decorativeCircle1: {
+  glowingOrb: {
+    position: "absolute",
+    width: "500px",
+    height: "500px",
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(12, 6, 26, 0.4) 0%, transparent 70%)",
+    top: "-150px",
+    right: "-150px",
+    filter: "blur(80px)",
+    animation: "float 8s ease-in-out infinite",
+  },
+  glowingOrb2: {
     position: "absolute",
     width: "400px",
     height: "400px",
     borderRadius: "50%",
-    background: "rgba(168, 85, 247, 0.1)",
-    top: "-100px",
-    right: "-100px",
-    filter: "blur(60px)",
-  },
-  decorativeCircle2: {
-    position: "absolute",
-    width: "300px",
-    height: "300px",
-    borderRadius: "50%",
-    background: "rgba(124, 58, 237, 0.08)",
-    bottom: "-80px",
-    left: "-80px",
-    filter: "blur(50px)",
+    background: "radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)",
+    bottom: "-120px",
+    left: "-120px",
+    filter: "blur(70px)",
+    animation: "float 6s ease-in-out infinite reverse",
   },
   container: {
     maxWidth: "1100px",
     width: "100%",
-    maxHeight: "calc(100vh - 104px)",
-    padding: "30px 40px",
-    background: "rgba(255, 255, 255, 0.95)",
-    backdropFilter: "blur(20px)",
+    maxHeight: "calc(100vh - 85px)",
+    padding: "40px 50px",
+    background: "rgba(39, 39, 84, 0.85)",
+    backdropFilter: "blur(25px)",
     borderRadius: "24px",
-    boxShadow: "0 20px 60px rgba(124, 58, 237, 0.15), 0 0 0 1px rgba(124, 58, 237, 0.1)",
+    boxShadow: "0 25px 70px rgba(41, 32, 63, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.3)",
     position: "relative",
-    border: "2px solid rgba(233, 213, 255, 0.5)",
+    border: "2px solid rgba(139, 92, 246, 0.4)",
     overflow: "hidden",
     display: "flex",
     flexDirection: "column",
   },
   header: {
-    marginBottom: 16,
+    marginBottom: 20,
     textAlign: "center",
     position: "relative",
     flexShrink: 0,
@@ -59,28 +61,30 @@ const styles = {
   titleWrapper: {
     display: "inline-flex",
     alignItems: "center",
-    gap: 8,
-    marginBottom: 4,
+    gap: 10,
+    marginBottom: 6,
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: "800",
-    background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)",
+    background: "linear-gradient(135deg, #a78bfa 0%, #f0abfc 100%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     margin: 0,
     letterSpacing: "-0.5px",
+    animation: "pulse 2s ease-in-out infinite",
   },
   subtitle: {
     fontSize: 14,
-    color: "#6b7280",
+    color: "#a5b4fc",
     margin: 0,
     fontWeight: "400",
   },
   divider: {
     height: "2px",
-    background: "linear-gradient(90deg, transparent, #e9d5ff, transparent)",
-    margin: "10px 0",
+    background: "linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent)",
+    margin: "12px 0",
+    boxShadow: "0 0 10px rgba(139, 92, 246, 0.4)",
   },
   row: { 
     display: "flex", 
@@ -91,81 +95,83 @@ const styles = {
   col: { flex: 1, display: "flex", flexDirection: "column" },
   fieldGroup: { display: "flex", flexDirection: "column", marginBottom: 10 },
   label: {
-    marginBottom: 6,
+    marginBottom: 8,
     fontSize: 12,
     fontWeight: "600",
-    color: "#374151",
+    color: "#c4b5fd",
     display: "flex",
     alignItems: "center",
     gap: 6,
-    letterSpacing: "0.3px",
+    letterSpacing: "0.5px",
     textTransform: "uppercase",
   },
   labelIcon: {
     fontSize: 16,
-    filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.1))",
+    filter: "drop-shadow(0 2px 4px rgba(139, 92, 246, 0.4))",
   },
   input: {
-    padding: "10px 14px",
+    padding: "12px 16px",
     fontSize: 14,
-    borderRadius: "10px",
-    border: "2px solid #e9d5ff",
-    background: "#ffffff",
+    borderRadius: "12px",
+    border: "2px solid rgba(139, 92, 246, 0.4)",
+    background: "rgba(15, 23, 42, 0.6)",
+    color: "#e0e7ff",
     transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
     fontFamily: "inherit",
-    boxShadow: "0 2px 6px rgba(124, 58, 237, 0.08)",
+    boxShadow: "0 4px 10px rgba(139, 92, 246, 0.2)",
   },
   inputFocus: {
     outline: "none",
-    borderColor: "#a855f7",
-    background: "#fff",
-    boxShadow: "0 0 0 4px rgba(168, 85, 247, 0.12), 0 4px 12px rgba(124, 58, 237, 0.15)",
-    transform: "translateY(-1px)",
+    borderColor: "#a78bfa",
+    background: "rgba(15, 23, 42, 0.9)",
+    boxShadow: "0 0 0 4px rgba(139, 92, 246, 0.25), 0 8px 20px rgba(139, 92, 246, 0.35)",
+    transform: "translateY(-2px)",
   },
   textarea: {
-    padding: "10px 14px",
+    padding: "12px 16px",
     fontSize: 14,
-    borderRadius: "10px",
-    border: "2px solid #e9d5ff",
-    background: "#ffffff",
-    minHeight: 60,
+    borderRadius: "12px",
+    border: "2px solid rgba(139, 92, 246, 0.4)",
+    background: "rgba(15, 23, 42, 0.6)",
+    color: "#e0e7ff",
+    minHeight: 70,
     fontFamily: "inherit",
     resize: "vertical",
     transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-    lineHeight: "1.5",
-    boxShadow: "0 2px 6px rgba(124, 58, 237, 0.08)",
+    lineHeight: "1.6",
+    boxShadow: "0 4px 10px rgba(139, 92, 246, 0.2)",
   },
   textareaFocus: {
     outline: "none",
-    borderColor: "#a855f7",
-    background: "#fff",
-    boxShadow: "0 0 0 4px rgba(168, 85, 247, 0.12), 0 4px 12px rgba(124, 58, 237, 0.15)",
-    transform: "translateY(-1px)",
+    borderColor: "#a78bfa",
+    background: "rgba(15, 23, 42, 0.9)",
+    boxShadow: "0 0 0 4px rgba(139, 92, 246, 0.25), 0 8px 20px rgba(139, 92, 246, 0.35)",
+    transform: "translateY(-2px)",
   },
   button: {
-    padding: "12px 36px",
+    padding: "14px 40px",
     fontSize: 15,
     fontWeight: "700",
-    background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)",
+    background: "linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)",
     color: "#fff",
     border: "none",
-    borderRadius: "10px",
+    borderRadius: "12px",
     cursor: "pointer",
     transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-    boxShadow: "0 8px 20px rgba(124, 58, 237, 0.35)",
+    boxShadow: "0 10px 30px rgba(139, 92, 246, 0.5), 0 0 20px rgba(236, 72, 153, 0.3)",
     letterSpacing: "0.5px",
     position: "relative",
     overflow: "hidden",
   },
   buttonHover: {
-    transform: "translateY(-3px)",
-    boxShadow: "0 12px 28px rgba(124, 58, 237, 0.5)",
+    transform: "translateY(-4px) scale(1.02)",
+    boxShadow: "0 15px 40px rgba(139, 92, 246, 0.6), 0 0 30px rgba(236, 72, 153, 0.4)",
   },
   buttonDisabled: {
-    opacity: 0.65,
+    opacity: 0.5,
     cursor: "not-allowed",
     transform: "none",
-    boxShadow: "0 4px 12px rgba(102, 126, 234, 0.2)",
+    boxShadow: "0 4px 12px rgba(139, 92, 246, 0.2)",
   },
   formActions: {
     display: "flex",
@@ -176,41 +182,43 @@ const styles = {
     flexShrink: 0,
   },
   error: {
-    color: "#dc2626",
+    color: "#fca5a5",
     fontSize: 12,
-    marginTop: 4,
+    marginTop: 6,
     fontWeight: "600",
     display: "flex",
     alignItems: "center",
     gap: 4,
   },
   serverError: {
-    padding: "10px 14px",
-    backgroundColor: "#fee2e2",
-    border: "2px solid #fecaca",
-    color: "#991b1b",
-    borderRadius: "10px",
+    padding: "12px 16px",
+    backgroundColor: "rgba(239, 68, 68, 0.15)",
+    border: "2px solid #ef4444",
+    color: "#fca5a5",
+    borderRadius: "12px",
     fontSize: 13,
     fontWeight: "600",
-    marginBottom: 12,
-    boxShadow: "0 4px 12px rgba(220, 38, 38, 0.15)",
+    marginBottom: 14,
+    boxShadow: "0 6px 20px rgba(239, 68, 68, 0.3)",
+    backdropFilter: "blur(10px)",
   },
   successMessage: {
-    padding: "10px 14px",
-    backgroundColor: "#d1fae5",
-    border: "2px solid #a7f3d0",
-    color: "#065f46",
-    borderRadius: "10px",
+    padding: "12px 16px",
+    backgroundColor: "rgba(16, 185, 129, 0.15)",
+    border: "2px solid #10b981",
+    color: "#6ee7b7",
+    borderRadius: "12px",
     fontSize: 13,
     fontWeight: "600",
-    marginBottom: 12,
-    boxShadow: "0 4px 12px rgba(16, 185, 129, 0.15)",
+    marginBottom: 14,
+    boxShadow: "0 6px 20px rgba(16, 185, 129, 0.3)",
+    backdropFilter: "blur(10px)",
     animation: "slideDown 0.4s ease-out",
   },
   helperText: {
     fontSize: 11,
-    color: "#9ca3af",
-    margin: "4px 0 0 0",
+    color: "#94a3b8",
+    margin: "6px 0 0 0",
     fontStyle: "italic",
   },
 };
@@ -329,9 +337,32 @@ export default function AppForm({ onSuccess } = {}) {
 	}
 
 	return (
-		<div style={styles.pageWrapper}>
-			<div style={styles.decorativeCircle1}></div>
-			<div style={styles.decorativeCircle2}></div>
+		<>
+			<style>
+				{`
+					@keyframes float {
+						0%, 100% { transform: translateY(0px); }
+						50% { transform: translateY(-20px); }
+					}
+					@keyframes pulse {
+						0%, 100% { opacity: 1; transform: scale(1); }
+						50% { opacity: 0.8; transform: scale(1.05); }
+					}
+					@keyframes slideDown {
+						from {
+							opacity: 0;
+							transform: translateY(-10px);
+						}
+						to {
+							opacity: 1;
+							transform: translateY(0);
+						}
+					}
+				`}
+			</style>
+			<div style={styles.pageWrapper}>
+				<div style={styles.glowingOrb}></div>
+				<div style={styles.glowingOrb2}></div>
 			<div style={styles.container}>
 				<div style={styles.header}>
 					<div style={styles.titleWrapper}>
@@ -493,7 +524,8 @@ export default function AppForm({ onSuccess } = {}) {
 					</div>
 				</form>
 			</div>
-		</div>
+			</div>
+		</>
 	);
 }  
 

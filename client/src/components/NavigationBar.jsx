@@ -3,45 +3,52 @@ import { Link, useLocation } from "react-router-dom";
 
 const navStyles = {
   navbar: {
-    background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)",
-    backdropFilter: "blur(10px)",
-    padding: "16px 32px",
-    boxShadow: "0 4px 20px rgba(124, 58, 237, 0.3)",
+    background: "linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #ec4899 100%)",
+    backdropFilter: "blur(15px)",
+    padding: "18px 40px",
+    boxShadow: "0 4px 30px rgba(139, 92, 246, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.3)",
     position: "sticky",
     top: 0,
     zIndex: 1000,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    borderBottom: "1px solid rgba(236, 72, 153, 0.3)",
   },
   brand: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "800",
     color: "#ffffff",
     textDecoration: "none",
     display: "flex",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
+    textShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
+    transition: "all 0.3s ease",
   },
   navLinks: {
     display: "flex",
-    gap: 16,
+    gap: 12,
     listStyle: "none",
     margin: 0,
     padding: 0,
   },
   navLink: {
     textDecoration: "none",
-    color: "rgba(255, 255, 255, 0.9)",
+    color: "rgba(255, 255, 255, 0.95)",
     fontWeight: "600",
     fontSize: 15,
-    padding: "10px 20px",
-    borderRadius: "8px",
-    transition: "all 0.2s ease",
+    padding: "10px 22px",
+    borderRadius: "10px",
+    transition: "all 0.3s ease",
+    background: "rgba(255, 255, 255, 0.1)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
   },
   activeLink: {
-    background: "rgba(255, 255, 255, 0.2)",
+    background: "rgba(255, 255, 255, 0.25)",
     color: "#ffffff",
+    boxShadow: "0 4px 15px rgba(255, 255, 255, 0.2)",
+    border: "1px solid rgba(255, 255, 255, 0.4)",
   },
 };
 
@@ -50,7 +57,12 @@ function Navigation() {
 
   return (
     <nav style={navStyles.navbar}>
-      <Link to="/" style={navStyles.brand}>
+      <Link 
+        to="/" 
+        style={navStyles.brand}
+        onMouseEnter={(e) => e.target.style.transform = "scale(1.05)"}
+        onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+      >
         📅 Scheduler App
       </Link>
       <ul style={navStyles.navLinks}>
@@ -60,6 +72,20 @@ function Navigation() {
             style={{
               ...navStyles.navLink,
               ...(location.pathname === "/" ? navStyles.activeLink : {}),
+            }}
+            onMouseEnter={(e) => {
+              if (location.pathname !== "/") {
+                e.target.style.background = "rgba(255, 255, 255, 0.2)";
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 20px rgba(255, 255, 255, 0.2)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (location.pathname !== "/") {
+                e.target.style.background = "rgba(255, 255, 255, 0.1)";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "none";
+              }
             }}
           >
             ➕ New Appointment
@@ -72,6 +98,20 @@ function Navigation() {
               ...navStyles.navLink,
               ...(location.pathname === "/ai-agent" ? navStyles.activeLink : {}),
             }}
+            onMouseEnter={(e) => {
+              if (location.pathname !== "/ai-agent") {
+                e.target.style.background = "rgba(255, 255, 255, 0.2)";
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 20px rgba(255, 255, 255, 0.2)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (location.pathname !== "/ai-agent") {
+                e.target.style.background = "rgba(255, 255, 255, 0.1)";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "none";
+              }
+            }}
           >
             🤖 AI Agent
           </Link>
@@ -83,6 +123,20 @@ function Navigation() {
               ...navStyles.navLink,
               ...(location.pathname === "/schedules" ? navStyles.activeLink : {}),
             }}
+            onMouseEnter={(e) => {
+              if (location.pathname !== "/schedules") {
+                e.target.style.background = "rgba(255, 255, 255, 0.2)";
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 20px rgba(255, 255, 255, 0.2)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (location.pathname !== "/schedules") {
+                e.target.style.background = "rgba(255, 255, 255, 0.1)";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "none";
+              }
+            }}
           >
             📋 View Schedules
           </Link>
@@ -93,6 +147,20 @@ function Navigation() {
             style={{
               ...navStyles.navLink,
               ...(location.pathname === "/dashboard" ? navStyles.activeLink : {}),
+            }}
+            onMouseEnter={(e) => {
+              if (location.pathname !== "/dashboard") {
+                e.target.style.background = "rgba(255, 255, 255, 0.2)";
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 20px rgba(255, 255, 255, 0.2)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (location.pathname !== "/dashboard") {
+                e.target.style.background = "rgba(255, 255, 255, 0.1)";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "none";
+              }
             }}
           >
             💎 Dashboard

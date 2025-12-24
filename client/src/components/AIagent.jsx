@@ -4,18 +4,32 @@ import { useNavigate } from "react-router-dom";
 const styles = {
   pageWrapper: {
     height: "calc(100vh - 64px)",
-    background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)",
-    padding: "0",
+    background: "linear-gradient(135deg, #39445fff 0%, #706da1ff 50%, #312e81 100%)",
+    padding: "40px 20px",
     fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     display: "flex",
+    alignItems: "center",        // ← Centers vertically
+    justifyContent: "center",    // ← Centers horizontally
     position: "relative",
-    overflow: "hidden",
+    overflow: "auto",
   },
   splitContainer: {
     display: "flex",
     width: "100%",
     height: "100%",
     gap: "0",
+  },
+  centeredContainer: {
+    maxWidth: "800px",           // ← Maximum width for centered content
+    width: "100%",
+    padding: "50px 60px",
+    background: "rgba(30, 27, 75, 0.85)",
+    backdropFilter: "blur(25px)",
+    borderRadius: "28px",
+    boxShadow: "0 25px 70px rgba(139, 92, 246, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.3)",
+    border: "2px solid rgba(139, 92, 246, 0.4)",
+    position: "relative",
+    zIndex: 1,
   },
   leftPanel: {
     flex: "0 0 55%",
@@ -296,101 +310,101 @@ const styles = {
     transition: "all 0.2s ease",
   },
   // Right panel styles
-  meetingCard: {
-    background: "rgba(30, 27, 75, 0.6)",
-    backdropFilter: "blur(15px)",
-    borderRadius: "14px",
-    padding: "20px",
-    marginBottom: "16px",
-    border: "2px solid rgba(139, 92, 246, 0.3)",
-    transition: "all 0.3s ease",
-    animation: "slideIn 0.5s ease-out",
-    position: "relative",
-    overflow: "hidden",
-  },
-  meetingCardGlow: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "3px",
-    background: "linear-gradient(90deg, #8b5cf6, #ec4899, #8b5cf6)",
-    backgroundSize: "200% 100%",
-    animation: "shimmer 3s linear infinite",
-  },
-  meetingTitle: {
-    fontSize: "18px",
-    fontWeight: "600",
-    color: "#f0abfc",
-    marginBottom: "12px",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-  },
-  meetingInfo: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-  },
-  meetingInfoRow: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    fontSize: "13px",
-    color: "#cbd5e1",
-  },
-  meetingIcon: {
-    fontSize: "16px",
-    minWidth: "20px",
-  },
-  emptyState: {
-    textAlign: "center",
-    padding: "60px 20px",
-    color: "#64748b",
-  },
-  emptyIcon: {
-    fontSize: "64px",
-    marginBottom: "16px",
-    opacity: 0.5,
-  },
-  emptyText: {
-    fontSize: "16px",
-    fontWeight: "500",
-    marginBottom: "8px",
-    color: "#94a3b8",
-  },
-  emptySubtext: {
-    fontSize: "13px",
-    color: "#64748b",
-  },
-  statsBar: {
-    display: "flex",
-    gap: "12px",
-    marginBottom: "25px",
-    flexWrap: "wrap",
-  },
-  statCard: {
-    flex: "1",
-    minWidth: "120px",
-    background: "rgba(139, 92, 246, 0.15)",
-    backdropFilter: "blur(10px)",
-    padding: "16px",
-    borderRadius: "10px",
-    border: "1px solid rgba(139, 92, 246, 0.3)",
-  },
-  statNumber: {
-    fontSize: "24px",
-    fontWeight: "700",
-    color: "#c4b5fd",
-    display: "block",
-    marginBottom: "4px",
-  },
-  statLabel: {
-    fontSize: "11px",
-    color: "#94a3b8",
-    textTransform: "uppercase",
-    letterSpacing: "0.5px",
-  },
+  // meetingCard: {
+  //   background: "rgba(30, 27, 75, 0.6)",
+  //   backdropFilter: "blur(15px)",
+  //   borderRadius: "14px",
+  //   padding: "20px",
+  //   marginBottom: "16px",
+  //   border: "2px solid rgba(139, 92, 246, 0.3)",
+  //   transition: "all 0.3s ease",
+  //   animation: "slideIn 0.5s ease-out",
+  //   position: "relative",
+  //   overflow: "hidden",
+  // },
+  // meetingCardGlow: {
+  //   position: "absolute",
+  //   top: 0,
+  //   left: 0,
+  //   right: 0,
+  //   height: "3px",
+  //   background: "linear-gradient(90deg, #8b5cf6, #ec4899, #8b5cf6)",
+  //   backgroundSize: "200% 100%",
+  //   animation: "shimmer 3s linear infinite",
+  // },
+  // meetingTitle: {
+  //   fontSize: "18px",
+  //   fontWeight: "600",
+  //   color: "#f0abfc",
+  //   marginBottom: "12px",
+  //   display: "flex",
+  //   alignItems: "center",
+  //   gap: "8px",
+  // },
+  // meetingInfo: {
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   gap: "8px",
+  // },
+  // meetingInfoRow: {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   gap: "10px",
+  //   fontSize: "13px",
+  //   color: "#cbd5e1",
+  // },
+  // meetingIcon: {
+  //   fontSize: "16px",
+  //   minWidth: "20px",
+  // },
+  // emptyState: {
+  //   textAlign: "center",
+  //   padding: "60px 20px",
+  //   color: "#64748b",
+  // },
+  // emptyIcon: {
+  //   fontSize: "64px",
+  //   marginBottom: "16px",
+  //   opacity: 0.5,
+  // },
+  // emptyText: {
+  //   fontSize: "16px",
+  //   fontWeight: "500",
+  //   marginBottom: "8px",
+  //   color: "#94a3b8",
+  // },
+  // emptySubtext: {
+  //   fontSize: "13px",
+  //   color: "#64748b",
+  // },
+  // statsBar: {
+  //   display: "flex",
+  //   gap: "12px",
+  //   marginBottom: "25px",
+  //   flexWrap: "wrap",
+  // },
+  // statCard: {
+  //   flex: "1",
+  //   minWidth: "120px",
+  //   background: "rgba(139, 92, 246, 0.15)",
+  //   backdropFilter: "blur(10px)",
+  //   padding: "16px",
+  //   borderRadius: "10px",
+  //   border: "1px solid rgba(139, 92, 246, 0.3)",
+  // },
+  // statNumber: {
+  //   fontSize: "24px",
+  //   fontWeight: "700",
+  //   color: "#c4b5fd",
+  //   display: "block",
+  //   marginBottom: "4px",
+  // },
+  // statLabel: {
+  //   fontSize: "11px",
+  //   color: "#94a3b8",
+  //   textTransform: "uppercase",
+  //   letterSpacing: "0.5px",
+  // },
 };
 
 export default function AIAgent() {
@@ -473,6 +487,7 @@ export default function AIAgent() {
           );
           setMessageType("warning");
 
+  
           // Get alternative time slots
           const altResponse = await fetch("/api/appointments/ai/smart-schedule", {
             method: "POST",
@@ -614,19 +629,18 @@ export default function AIAgent() {
         `}
       </style>
       <div style={styles.pageWrapper}>
-        <div style={styles.splitContainer}>
-          {/* LEFT PANEL - AI Input */}
-          <div style={styles.leftPanel}>
-            <div style={styles.glowingOrb}></div>
-            
-            <div style={styles.header}>
-              <span style={styles.headerIcon}>🤖✨</span>
-              <h1 style={styles.title}>AI Scheduling Agent</h1>
-              <p style={styles.subtitle}>
-                Schedule meetings using natural language • Automatic conflict detection<br/>
-                9 AM - 5 PM • Real-time preview
-              </p>
-            </div>
+        <div style={styles.glowingOrb}></div>
+        <div style={styles.glowingOrb2}></div>
+        
+        <div style={styles.centeredContainer}>
+          <div style={styles.header}>
+            <span style={styles.headerIcon}>🤖✨</span>
+            <h1 style={styles.title}>AI Scheduling Agent</h1>
+            <p style={styles.subtitle}>
+              Schedule meetings using natural language • Automatic conflict detection<br/>
+              9 AM - 5 PM • Real-time preview
+            </p>
+          </div>
 
             <div style={styles.nlpInputContainer}>
               <label style={styles.label}>
@@ -772,87 +786,6 @@ export default function AIAgent() {
                 </div>
               </div>
             )}
-          </div>
-
-          {/* RIGHT PANEL - Created Meetings Display */}
-          <div style={styles.rightPanel}>
-            <div style={styles.glowingOrb2}></div>
-            
-            <div style={styles.rightHeader}>
-              <div style={styles.rightTitle}>
-                <span>📅</span>
-                <span>Your Meetings</span>
-              </div>
-              <div style={styles.rightSubtitle}>
-                Live view of all scheduled appointments
-              </div>
-            </div>
-
-            <div style={styles.statsBar}>
-              <div style={styles.statCard}>
-                <span style={styles.statNumber}>{createdMeetings.length}</span>
-                <span style={styles.statLabel}>Total Meetings</span>
-              </div>
-              <div style={styles.statCard}>
-                <span style={styles.statNumber}>
-                  {createdMeetings.filter(m => new Date(m.date) >= new Date()).length}
-                </span>
-                <span style={styles.statLabel}>Upcoming</span>
-              </div>
-            </div>
-
-            {loading ? (
-              <div style={styles.emptyState}>
-                <div style={styles.emptyIcon}>⏳</div>
-                <div style={styles.emptyText}>Loading meetings...</div>
-              </div>
-            ) : createdMeetings.length === 0 ? (
-              <div style={styles.emptyState}>
-                <div style={styles.emptyIcon}>📭</div>
-                <div style={styles.emptyText}>No meetings yet</div>
-                <div style={styles.emptySubtext}>
-                  Create your first meeting using the AI agent on the left
-                </div>
-              </div>
-            ) : (
-              createdMeetings.map((meeting, index) => (
-                <div key={meeting._id || index} style={styles.meetingCard}>
-                  <div style={styles.meetingCardGlow}></div>
-                  <div style={styles.meetingTitle}>
-                    <span>📌</span>
-                    <span>{meeting.title}</span>
-                  </div>
-                  <div style={styles.meetingInfo}>
-                    <div style={styles.meetingInfoRow}>
-                      <span style={styles.meetingIcon}>📅</span>
-                      <span>{new Date(meeting.date).toLocaleDateString('en-US', { 
-                        weekday: 'short', 
-                        year: 'numeric', 
-                        month: 'short', 
-                        day: 'numeric' 
-                      })}</span>
-                    </div>
-                    <div style={styles.meetingInfoRow}>
-                      <span style={styles.meetingIcon}>🕐</span>
-                      <span>{meeting.time} ({meeting.duration} minutes)</span>
-                    </div>
-                    {meeting.description && (
-                      <div style={styles.meetingInfoRow}>
-                        <span style={styles.meetingIcon}>📝</span>
-                        <span>{meeting.description}</span>
-                      </div>
-                    )}
-                    {meeting.attendees && meeting.attendees.length > 0 && (
-                      <div style={styles.meetingInfoRow}>
-                        <span style={styles.meetingIcon}>👥</span>
-                        <span>{meeting.attendees.join(', ')}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
         </div>
       </div>
     </>
