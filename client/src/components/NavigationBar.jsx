@@ -3,17 +3,18 @@ import { Link, useLocation } from "react-router-dom";
 
 const navStyles = {
   navbar: {
-    background: "linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #ec4899 100%)",
-    backdropFilter: "blur(15px)",
+    background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 15%, #7c3aed 40%, #a855f7 60%, #ec4899 85%, #f97316 100%)",
+    backdropFilter: "blur(20px)",
     padding: "18px 40px",
-    boxShadow: "0 4px 30px rgba(139, 92, 246, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.3)",
+    boxShadow: "0 8px 32px rgba(139, 92, 246, 0.4), 0 0 80px rgba(236, 72, 153, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
     position: "sticky",
     top: 0,
     zIndex: 1000,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    borderBottom: "1px solid rgba(236, 72, 153, 0.3)",
+    borderBottom: "2px solid rgba(236, 72, 153, 0.4)",
+    borderTop: "1px solid rgba(139, 92, 246, 0.3)",
   },
   brand: {
     fontSize: 26,
